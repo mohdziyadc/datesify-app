@@ -1,4 +1,12 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -12,17 +20,23 @@ const Products = () => {
     <SafeAreaView style={styles.container}>
       <Header title="Datesify" />
       <View style={{ flex: 1 }}>
-        <FlatList
-          data={products}
-          renderItem={(item) => (
-            <ProductCard key={item.item.id} product={item.item} />
-          )}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={{
-            padding: 5,
-          }}
-        />
+        {isLoading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator size={"large"} color={"violet"} />
+          </View>
+        ) : (
+          <FlatList
+            data={products}
+            renderItem={(item) => (
+              <ProductCard key={item.item.id} product={item.item} />
+            )}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={{
+              padding: 5,
+            }}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -36,5 +50,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
